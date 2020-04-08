@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:alice/model/alice_http_call.dart';
 import 'package:flutter/material.dart';
 
@@ -26,10 +28,13 @@ class _AliceCallRequestWidget
     rows.add(
         getListRow("Content type:", getContentType(_call.request.headers)));
 
-    var body = _call.request.body as String;
+    var body = _call.request.body;
     var bodyContent = "Body is empty";
-    if (body != null && body.length > 0) {
-      bodyContent = formatBody(body, getContentType(_call.request.headers));
+    if (body != null ) {
+      var bodyJson = json.encode(body);
+      if (bodyJson.length > 0) {
+        bodyContent = formatBody(body, getContentType(_call.request.headers));
+      }
     }
     rows.add(getListRow("Body:", bodyContent));
 
