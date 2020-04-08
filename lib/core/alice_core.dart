@@ -41,6 +41,10 @@ class AliceCore {
     _brightness = darkTheme ? Brightness.dark : Brightness.light;
   }
 
+  void setNavigatorKey(GlobalKey<NavigatorState> navigatorKey){
+      _navigatorKey = navigatorKey;
+  }
+
   dispose() {
     changesSubject.close();
     callUpdateSubject.close();

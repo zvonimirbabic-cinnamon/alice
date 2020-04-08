@@ -62,4 +62,8 @@ class Alice {
   List getChopperInterceptor() {
     return new List()..add(AliceChopperInterceptor(_core));
   }
+
+  void setNavigatorKey(GlobalKey<NavigatorState> navigatorKey){
+    _core.setNavigatorKey(navigatorKey);
+  }
 }
