@@ -26,7 +26,7 @@ class _AliceCallRequestWidget
     rows.add(
         getListRow("Content type:", getContentType(_call.request.headers)));
 
-    var body = _call.request.body;
+    var body = _call.request.body as String;
     var bodyContent = "Body is empty";
     if (body != null && body.length > 0) {
       bodyContent = formatBody(body, getContentType(_call.request.headers));
