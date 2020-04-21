@@ -1,9 +1,7 @@
 import 'package:alice/model/alice_http_call.dart';
 import 'package:alice/ui/utils/alice_constants.dart';
 import 'package:alice/ui/widget/alice_base_call_details_widget.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
 class AliceCallResponseWidget extends StatefulWidget {
   final AliceHttpCall call;
@@ -26,8 +24,9 @@ class _AliceCallResponseWidgetState
   static const _textContentType = "text";
 
   static const _kLargeOutputSize = 100000;
-  VideoPlayerController _videoPlayerController;
-  ChewieController _chewieController;
+
+  //VideoPlayerController _videoPlayerController;
+  //ChewieController _chewieController;
   bool _showLargeBody = false;
   bool _showUnsupportedBody = false;
 
@@ -61,12 +60,12 @@ class _AliceCallResponseWidgetState
   @override
   void dispose() {
     super.dispose();
-    if (_videoPlayerController != null) {
+    /*if (_videoPlayerController != null) {
       _videoPlayerController.dispose();
     }
     if (_chewieController != null) {
       _chewieController.dispose();
-    }
+    }*/
   }
 
   List<Widget> _buildGeneralDataRows() {
@@ -191,14 +190,14 @@ class _AliceCallResponseWidgetState
   }
 
   List<Widget> _buildVideoBodyRows() {
-    final videoPlayerController = VideoPlayerController.network(_call.uri);
+    //final videoPlayerController = VideoPlayerController.network(_call.uri);
 
-    final chewieController = ChewieController(
+    /*final chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
       aspectRatio: 3 / 2,
       autoPlay: true,
       looping: true,
-    );
+    );*/
 
     List<Widget> rows = List();
     rows.add(
@@ -212,11 +211,11 @@ class _AliceCallResponseWidgetState
       ),
     );
     rows.add(const SizedBox(height: 8));
-    rows.add(
+    /*rows.add(
       Chewie(
         controller: chewieController,
       ),
-    );
+    );*/
     rows.add(const SizedBox(height: 8));
     return rows;
   }
