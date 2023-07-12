@@ -1,7 +1,8 @@
 import 'package:alice/model/alice_http_call.dart';
-import 'package:alice/utils/alice_constants.dart';
 import 'package:alice/ui/widget/alice_base_call_details_widget.dart';
+import 'package:alice/utils/alice_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AliceCallResponseWidget extends StatefulWidget {
   final AliceHttpCall call;
@@ -14,8 +15,7 @@ class AliceCallResponseWidget extends StatefulWidget {
   }
 }
 
-class _AliceCallResponseWidgetState
-    extends AliceBaseCallDetailsWidgetState<AliceCallResponseWidget> {
+class _AliceCallResponseWidgetState extends AliceBaseCallDetailsWidgetState<AliceCallResponseWidget> {
   static const _imageContentType = "image";
   static const _videoContentType = "video";
   static const _jsonContentType = "json";
@@ -44,18 +44,10 @@ class _AliceCallResponseWidgetState
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            CircularProgressIndicator(),
-            Text("Awaiting response...")
-          ],
+          children: const [CircularProgressIndicator(), Text("Awaiting response...")],
         ),
       );
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   List<Widget> _buildGeneralDataRows() {
@@ -135,8 +127,7 @@ class _AliceCallResponseWidgetState
               return Center(
                 child: CircularProgressIndicator(
                   value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
+                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
                       : null,
                 ),
               );
@@ -164,8 +155,7 @@ class _AliceCallResponseWidgetState
       rows.add(
         ElevatedButton(
           style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(AliceConstants.lightRed),
+            backgroundColor: MaterialStateProperty.all<Color>(AliceConstants.lightRed),
           ),
           onPressed: () {
             setState(() {
@@ -184,13 +174,12 @@ class _AliceCallResponseWidgetState
   List<Widget> _buildTextBodyRows() {
     final List<Widget> rows = [];
     final headers = _call.response!.headers;
-    final bodyContent =
-        formatBody(_call.response!.body, getContentType(headers));
+    final bodyContent = formatBody(_call.response!.body, getContentType(headers));
     rows.add(getListRow("Body:", bodyContent));
     return rows;
   }
 
-
+  List<Widget> _buildVideoBodyRows() {
     final List<Widget> rows = [];
     rows.add(
       Row(
@@ -203,6 +192,13 @@ class _AliceCallResponseWidgetState
       ),
     );
     rows.add(const SizedBox(height: 8));
+    rows.add(TextButton(
+      child: Text("Open video in web browser"),
+      onPressed: () async {
+        await launchUrl(Uri.parse(_call.uri));
+      },
+    ));
+    rows.add(const SizedBox(height: 8));
     return rows;
   }
 
@@ -212,8 +208,7 @@ class _AliceCallResponseWidgetState
     final contentType = getContentType(headers) ?? "<unknown>";
 
     if (_showUnsupportedBody) {
-      final bodyContent =
-          formatBody(_call.response!.body, getContentType(headers));
+      final bodyContent = formatBody(_call.response!.body, getContentType(headers));
       rows.add(getListRow("Body:", bodyContent));
     } else {
       rows.add(
@@ -228,8 +223,7 @@ class _AliceCallResponseWidgetState
       rows.add(
         ElevatedButton(
           style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(AliceConstants.lightRed),
+            backgroundColor: MaterialStateProperty.all<Color>(AliceConstants.lightRed),
           ),
           onPressed: () {
             setState(() {
@@ -258,20 +252,15 @@ class _AliceCallResponseWidgetState
   }
 
   bool _isImageResponse() {
-    return _getContentTypeOfResponse()!
-        .toLowerCase()
-        .contains(_imageContentType);
+    return _getContentTypeOfResponse()!.toLowerCase().contains(_imageContentType);
   }
 
   bool _isVideoResponse() {
-    return _getContentTypeOfResponse()!
-        .toLowerCase()
-        .contains(_videoContentType);
+    return _getContentTypeOfResponse()!.toLowerCase().contains(_videoContentType);
   }
 
   bool _isTextResponse() {
-    final String responseContentTypeLowerCase =
-        _getContentTypeOfResponse()!.toLowerCase();
+    final String responseContentTypeLowerCase = _getContentTypeOfResponse()!.toLowerCase();
 
     return responseContentTypeLowerCase.contains(_jsonContentType) ||
         responseContentTypeLowerCase.contains(_xmlContentType) ||
@@ -283,7 +272,6 @@ class _AliceCallResponseWidgetState
   }
 
   bool _isLargeResponseBody() {
-    return _call.response!.body != null &&
-        _call.response!.body.toString().length > _kLargeOutputSize;
+    return _call.response!.body != null && _call.response!.body.toString().length > _kLargeOutputSize;
   }
 }
