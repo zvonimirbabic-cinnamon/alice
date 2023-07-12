@@ -21,7 +21,7 @@ dependencies:
   package_info_plus: ^3.0.1
   open_filex: ^4.2.2
   sensors_plus: ^2.0.1
-  share_plus: ^6.1.0
+  share_plus: ^7.0.2
   chopper: ^5.1.0
   better_player: ^0.0.83
   collection: ^1.16.0
