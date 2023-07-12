@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.1.0
+  http: ^0.13.0
   dio: ^5.2.1+1
   flutter_local_notifications: ^15.0.1
   rxdart: ^0.27.7
