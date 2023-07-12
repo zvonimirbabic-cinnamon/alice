@@ -45,10 +45,10 @@ packages:
     dependency: "direct main"
     description:
       name: chopper
-      sha256: "130852c9b29fafb7533fcae80ebd9e10e51f78e5ca26d2129d2f171989277436"
+      sha256: "27cfb2aa601f591b6d041528b4e15827231cf1774227485ba96928a0ebf26265"
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.0"
+    version: "5.2.0"
   clock:
     dependency: transitive
     description:
